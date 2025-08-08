@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: integrity-learning
+    env: python
+    plan: free
+    repo: https://github.com/nehanasir/portfolio
+    branch: my-new-branch
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn myportfolio.wsgi:application"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: myportfolio.settings
+      - key: SECRET_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false

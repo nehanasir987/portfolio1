@@ -1,0 +1,595 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neha | Full Stack Developer</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+  
+  <!-- Meta tags -->
+  <meta name="description" content="Neha's Portfolio - Django/Python Developer with Frontend Expertise">
+  <meta name="keywords" content="Django, Python, Web Developer, Portfolio, Full Stack">
+  
+  <!-- CDN Links -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/home.style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/header.style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/footer.style.css' %}">
+
+  <style>
+    :root {
+      --primary: #6e8efb;
+      --secondary: #a777e3;
+      --dark: #2d3748;
+      --light: #f8f9fa;
+    }
+    
+    /* ===== ENHANCED HERO SECTION ===== */
+    .hero-section {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .hero-bg-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.1;
+      background-image: radial-gradient(var(--light) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .hero-highlight {
+      color: #ffd700;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .hero-highlight::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 215, 0, 0.3);
+      z-index: -1;
+      transform: skewX(-15deg);
+    }
+    
+    .hero-subtitle {
+      font-size: clamp(1.2rem, 3vw, 1.5rem);
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    .hero-description {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 28px;
+      background: white;
+      color: var(--primary);
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin: 0 10px 15px;
+    }
+    
+    .hero-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      color: var(--secondary);
+    }
+    
+    .hero-cta.secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+    
+    .hero-cta.secondary:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: white;
+    }
+    /* ===== IMPROVED SKILLS SECTION ===== */
+    .skills-section {
+      background: var(--light);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .skill-card {
+      perspective: 1000px;
+      height: 200px;
+      position: relative;
+      transition: all 0.5s ease;
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    
+    .skill-card:hover {
+      transform: translateY(-10px);
+    }
+    
+    .skill-front, .skill-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      transition: all 0.6s ease;
+    }
+    
+    .skill-front {
+      background: white;
+      transform: rotateY(0deg);
+    }
+    
+    .skill-front i {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .skill-card:hover .skill-front i {
+      transform: scale(1.1);
+    }
+    
+    .skill-back {
+      background: var(--primary);
+      color: white;
+      transform: rotateY(180deg);
+      text-align: center;
+    }
+    
+    .skill-card:hover .skill-front {
+      transform: rotateY(180deg);
+    }
+    
+    .skill-card:hover .skill-back {
+      transform: rotateY(360deg);
+    }
+    
+    /* ===== CERTIFICATIONS SECTION ===== */
+    .certifications-section {
+      background: white;
+    }
+    
+    .cert-card {
+      transition: all 0.3s ease;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .cert-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    
+    .cert-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--primary);
+      color: white;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+    }
+    
+    /* ===== ANIMATIONS ===== */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+    
+    .floating {
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .hero-section {
+        padding: 4rem 1.5rem;
+      }
+      
+      .hero-cta {
+        display: block;
+        width: 80%;
+        margin: 0 auto 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  {% include 'portfolio/header.html' %}
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-content animate__animated animate__fadeIn">
+      <h1 class="hero-title">
+        Hi, I'm <span class="hero-highlight">Neha</span>
+      </h1>
+      <h2 class="hero-subtitle">Fronted Developer | Exploring Django </h2>
+      <p class="hero-description">
+        I build modern web applications with HTML , CSS , Django, Python, and JavaScript. 
+        Passionate about creating efficient, scalable solutions with clean code 
+        and intuitive user experiences.
+      </p>
+      <div class="d-flex flex-wrap justify-content-center">
+        <a href="{% url 'project' %}" class="hero-cta">
+          <i class="fas fa-laptop-code"></i> View Projects
+        </a>
+        <a href="{% url 'contact' %}" class="hero-cta secondary">
+          <i class="fas fa-paper-plane"></i> Contact Me
+        </a>
+      </div>
+      <div class="social-links mt-4">
+        <a href="https://github.com/nehanasir987" class="text-white mx-3 fs-4"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/neha-nasir/" class="text-white mx-3 fs-4"><i class="fab fa-linkedin"></i></a>
+        <a href="https://x.com/NehaNasir923" class="text-white mx-3 fs-4"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- About Section -->
+<section class="container py-4 py-md-5" id="about">
+  <div class="row align-items-center gx-2"> <!-- Reduced horizontal space -->
+    
+    <!-- Image Column -->
+    <div class="col-lg-6 mb-2 mb-lg-0">
+      <img src="{% static 'images/in.jpeg' %}" 
+           class="img-fluid rounded-4 shadow floating" 
+           alt="Neha"
+           style="max-height: 400px; width: 60%; max-width: 60%;">
+    </div>
+
+    <!-- Text Column -->
+    <div class="col-lg-6">
+      <h2 class="text-primary mb-4 fw-bold">About Me</h2>
+      <p class="lead mb-4">
+        I'm a <span class="fw-bold text-success">Full Stack Developer</span> with 
+        expertise in Django, Python, and modern web technologies. I transform ideas 
+        into functional, beautiful web applications.
+      </p>
+
+      <div class="mb-3">
+        <h5 class="fw-bold mb-3">Technical Skills:</h5>
+        <div class="d-flex flex-wrap gap-2">
+          <span class="badge bg-primary bg-opacity-10 text-primary py-2 px-3">Django</span>
+          <span class="badge bg-primary bg-opacity-10 text-primary py-2 px-3">Python</span>
+          <span class="badge bg-primary bg-opacity-10 text-primary py-2 px-3">JavaScript</span>
+          <span class="badge bg-primary bg-opacity-10 text-primary py-2 px-3">HTML5/CSS3</span>
+          <span class="badge bg-primary bg-opacity-10 text-primary py-2 px-3">Bootstrap 5</span>
+          <span class="badge bg-primary bg-opacity-10 text-primary py-2 px-3">PostgreSQL</span>
+          <span class="badge bg-primary bg-opacity-10 text-primary py-2 px-3">Git/GitHub</span>
+        </div>
+
+        <div class="d-flex flex-wrap gap-3 mt-4">
+          <a href="{% static 'images/neha-resume1.pdf' %}" 
+             class="btn btn-primary px-4 py-2 shadow-sm"
+             target="_blank">
+            <i class="fas fa-download me-2"></i> Download CV
+          </a>
+          <a href="#experience" class="btn btn-outline-primary px-4 py-2">
+            <i class="fas fa-briefcase me-2"></i> My Journey
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+   <!-- Skills Section -->
+  <section id="skills" class="skills-section py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="text-primary fw-bold">My Skills</h2>
+        <p class="lead text-muted">Technologies I work with</p>
+      </div>
+      <div class="row justify-content-center g-4">
+        {% for skill in skills %}
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="skill-card shadow-sm">
+            <div class="skill-front">
+              <i class="{{ skill.icon }}"></i>
+              <h5 class="mt-3 fw-bold">{{ skill.name }}</h5>
+            </div>
+            <div class="skill-back">
+              <p class="px-3">{{ skill.desc }}</p>
+              <div class="mt-3">
+                {% if skill.level %}
+                <div class="progress" style="height: 6px;">
+              <div class="progress-bar bg-white"
+     role="progressbar"
+     style="width: 80%;"
+     aria-valuenow="80"
+     aria-valuemin="0"
+     aria-valuemax="100"></div>
+
+                </div>
+                <small class="text-white-50">Proficiency: {{ skill.level }}%</small>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications Section -->
+  <section id="certifications" class="certifications-section py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="text-primary fw-bold">Certifications</h2>
+        <p class="lead text-muted">My learning achievements</p>
+      </div>
+      
+      <div class="row g-7">
+        {% for cert in certifications %}
+        <div class="col-md-6 col-lg-12">
+          <div class="cert-card h-100 shadow-sm position-relative">
+            {% if cert.certificate_url %}
+            <span class="cert-badge">Verified</span>
+            {% endif %}
+            <div class="card-body p-4">
+              <div class="d-flex align-items-start mb-3">
+                <div class="bg-primary bg-opacity-10 text-primary p-2 rounded-circle me-3">
+                  <i class="fas fa-certificate"></i>
+                </div>
+                <div>
+                  <h5 class="text-primary mb-1 fw-bold">{{ cert.title }}</h5>
+                  <small class="text-muted">{{ cert.provider }}</small>
+                </div>
+              </div>
+              <p class="card-text">{{ cert.description }}</p>
+              {% if cert.certificate_url %}
+              <a href="{{ cert.certificate_url }}" 
+                 class="btn btn-sm btn-outline-primary mt-2"
+                 target="_blank">
+                <i class="fas fa-external-link-alt me-1"></i> View Credential
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience" class="py-5 bg-light">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="text-primary fw-bold">
+          <i class="fas fa-briefcase me-2"></i>Professional Experience
+        </h2>
+        <p class="lead text-muted">My career journey</p>
+      </div>
+
+      <div class="row justify-content-center g-4">
+        <!-- Experience 1 -->
+        <div class="col-lg-6">
+          <div class="card h-100 border-0 shadow-sm experience-card">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center mb-3">
+                <div class="bg-primary bg-opacity-10 text-primary p-2 rounded-circle me-3">
+                  <i class="fas fa-laptop-code"></i>
+                </div>
+                <div>
+                  <h5 class="text-primary mb-0 fw-bold">2024- Present</h5>
+                  <small class="text-muted">Fronted Developer</small>
+                </div>
+              </div>
+              <h4 class="fw-bold mb-3">Fronted Developer</h4>
+              <ul class="ps-3">
+                <li class="mb-2">Developed 3 full-stack applications using Django with Fronted, HTML | CSS | JS</li>
+                <li class="mb-2">Improved page load speeds by optimizing static files and implementing caching</li>                <li class="mb-2">Improved application performance by 40% through optimization</li>
+                <li>Used Git for daily code versioning in team projects</li>           
+   </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Experience 2 -->
+        <div class="col-lg-6">
+          <div class="card h-100 border-0 shadow-sm experience-card">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center mb-3">
+                <div class="bg-success bg-opacity-10 text-success p-2 rounded-circle me-3">
+                  <i class="fas fa-user-tie"></i>
+                </div>
+                <div>
+                  <h5 class="text-success mb-0 fw-bold">2025 - Present </h5>
+                  <small class="text-muted"> Exploring Django & Internship</small>
+                </div>
+              </div>
+              <h4 class="fw-bold mb-3">Web Development Intern</h4>
+              <ul class="ps-3">
+                <li class="mb-2">Worked in Agile development team environment</li>
+                <li class="mb-2">Contributed to production-level codebases</li>
+                <li class="mb-2">Implemented CI/CD pipelines for automated deployment</li>
+                <li>Mentored 2 junior developers on best practices</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education Section -->
+  <section id="education" class="py-5">
+    <div class="container">
+      <div class="text-center mb-5"><!--spacing between edu(my academic bg & edu card)-->
+        <h2 class="text-primary fw-bold">
+          <i class="fas fa-graduation-cap me-6"></i>Education
+        </h2>
+        <p class="lead text-muted">My academic background</p>
+      </div>
+
+      <div class="row g-4">
+        {% for edu in educations %}
+        <div class="col-md-6">
+          <div class="card h-100 border-0 shadow-sm edu-card">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center mb-3">
+                <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-circle me-3">
+                  <i class="fas fa-university"></i>
+                </div>
+                <div>
+                  <h5 class="text-primary mb-0 fw-bold">{{ edu.degree }}</h5>
+                  <small class="text-muted">{{ edu.institute }}</small>
+                </div>
+              </div>
+              <p class="mb-2">
+                <i class="fas fa-calendar-alt me-2 text-muted"></i>{{ edu.duration }}
+              </p>
+              <p class="card-text">{{ edu.description }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+        <!-- Currently Learning -->
+        <div class="col-12">
+          <div class="card border-0 shadow-sm border-start border-4 border-warning">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center mb-3">
+                <div class="bg-warning bg-opacity-10 text-warning p-2 rounded-circle me-3">
+                  <i class="fas fa-spinner fa-spin"></i>
+                </div>
+                <div>
+                  <h5 class="text-warning mb-0 fw-bold">Currently Learning</h5>
+                  <small class="text-muted">Continuous Skill Development</small>
+                </div>
+              </div>
+              <p class="card-text">
+                Expanding my expertise in advanced Django concepts, DevOps tools (Docker, Kubernetes), 
+                and cloud platforms (AWS) to build scalable, production-ready applications.
+              </p>
+              <div class="d-flex flex-wrap gap-2 mt-3">
+                <span class="badge bg-warning bg-opacity-10 text-warning py-2">Django REST</span>
+                <span class="badge bg-warning bg-opacity-10 text-warning py-2">Docker</span>
+                <span class="badge bg-warning bg-opacity-10 text-warning py-2">AWS</span>
+                <span class="badge bg-warning bg-opacity-10 text-warning py-2">CI/CD</span>
+                <span class="badge bg-warning bg-opacity-10 text-warning py-2">Kubernetes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% include 'portfolio/footer.html' %}
+
+   <script src="{% static 'js/home.js' %}"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Back to Top Button
+    const backToTop = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        backToTop.style.opacity = '1';
+        backToTop.style.visibility = 'visible';
+      } else {
+        backToTop.style.opacity = '0';
+        backToTop.style.visibility = 'hidden';
+      }
+    });
+    
+    backToTop.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    // Skill Card Flip Animation
+    document.querySelectorAll('.skill-card').forEach(card => {
+      card.addEventListener('click', function() {
+        this.classList.toggle('flipped');
+      });
+    });
+    
+    // Scroll Animation
+    const animateOnScroll = () => {
+      const elements = document.querySelectorAll('.skill-card, .cert-card, .experience-card, .edu-card');
+      
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.3;
+        
+        if (elementPosition < screenPosition) {
+          element.classList.add('animate__animated', 'animate__fadeInUp');
+        }
+      });
+    };
+    
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+  </script>
+</body>
+</html>

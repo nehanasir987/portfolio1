@@ -1,0 +1,209 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="{% static 'css/project.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/header.style.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="{% static 'css/footer.style.css' %}" />
+  <style>
+    /* Animation Classes */
+    .animated-heading {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease-out;
+    }
+
+    .animated-text {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease-out 0.2s;
+    }
+
+    .project-card {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease-out;
+      transition-delay: calc(var(--order) * 0.1s);
+      will-change: transform;
+    }
+
+    .visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Project Card Hover Effects */
+    .project-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      transform: translateY(-5px);
+    }
+
+    /* Video Container Effects */
+    .project-image {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      height: 200px; /* Set a fixed height for consistency */
+    }
+
+    .project-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+    .project-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Button Glow Effect */
+    .btn-glow {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .btn-glow:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+    }
+
+    .btn-glow::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 200%;
+      height: 200%;
+      background: rgba(255, 255, 255, 0.13);
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.13) 0%,
+        rgba(255, 255, 255, 0.13) 77%,
+        rgba(255, 255, 255, 0.5) 92%,
+        rgba(255, 255, 255, 0.0) 100%
+      );
+      transform: rotate(30deg);
+      transition: all 0.7s ease;
+    }
+
+    .btn-glow:hover::after {
+      left: 100%;
+    }
+
+    /* Tech Stack Items */
+    .tech {
+      transition: all 0.3s ease;
+    }
+
+    .tech:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+  {% include 'portfolio/header.html' %}
+
+  <section id="projects" class="projects-section">
+    <div class="section-header">
+      <h1 class="animated-heading">Projects</h1>
+      <p class="animated-text">
+        All of my projects are developed with a strong focus on clean code, efficient performance, and modern technologies. I ensure that each project is responsive, scalable, and easy to maintain.
+      </p>
+    </div>
+
+    <div class="projects-grid">
+      {% for project in projects %}
+      <div class="project-card">
+        <div class="project-header">
+        <h3><i class="{{ project.pro_icon }}"></i> {{ project.pro_title }}</h3>
+          <span class="project-date">{{ project.created_on }}</span>
+        </div>
+        <div class="project-image">
+  {% if project.pro_video %}
+    <video class="project-video" autoplay loop muted playsinline>
+      <source src="{{ project.pro_video.url }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  {% elif project.pro_image %}
+    <img src="{{ project.pro_image.url }}" alt="{{ project.pro_title }}" class="project-img"/>
+  {% else %}
+    <img src="{% static 'images/default.jpg' %}" alt="Default" class="project-img"/>
+  {% endif %}
+</div>
+
+
+        <p class="project-desc">{{ project.pro_desc }}</p>
+        <div class="tech-stack">
+          {% for tech in project.get_tech_list %}
+            <span class="tech {{ tech|lower }}">{{ tech }}</span>
+          {% endfor %}
+        </div>
+        <div class="project-links">
+          <a href="{{ project.github_link }}" target="_blank" class="btn-glow">
+            <i class="fab fa-github"></i> Source Code
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  {% include 'portfolio/footer.html' %}
+
+  <script>
+    // Simple animation when scrolling to projects
+    document.addEventListener('DOMContentLoaded', function() {
+      const projectCards = document.querySelectorAll('.project-card');
+      
+      // Set order for staggered animation and play videos
+      projectCards.forEach((card, index) => {
+        card.style.setProperty('--order', index);
+        
+        // Auto-play videos that are in viewport
+        const video = card.querySelector('video');
+        if (video) {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                video.play().catch(e => console.log("Video play failed:", e));
+              } else {
+                video.pause();
+              }
+            });
+          }, { threshold: 0.5 });
+          
+          observer.observe(video);
+        }
+      });
+
+      // Animate elements when they come into view
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.animated-heading, .animated-text, .project-card').forEach(el => {
+        observer.observe(el);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<footer class="professional-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <h2 class="footer-name">Neha Nasir</h2>
+      <p class="footer-title">Frontend Developer |Working on Django </p>
+    </div>
+    
+    <div class="footer-about">
+      <p class="footer-desc">
+        I craft pixel-perfect, responsive web experiences with modern technologies. 
+        Passionate about clean code, intuitive UX, and scalable solutions. 
+        Currently open to new opportunities and collaborations.
+      </p>
+    </div>
+
+    <div class="footer-cta">
+      <a href="https://www.linkedin.com/in/neha-nasir/" target="_blank" rel="noopener noreferrer" class="contact-btn" aria-label="LinkedIn">
+        Let's Connect
+        <i class="fas fa-paper-plane"></i>
+      </a>
+    </div>
+
+    <div class="footer-social">
+      <a href="https://github.com/nehanasir987" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/neha-nasir/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+      <a href="https://x.com/NehaNasir923" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Twitter">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </div>
+
+    <div class="footer-legal">
+      <p class="copyright">&copy; 2025 Neha Nasir. All rights reserved.</p>
+      <div class="legal-links">
+        <a href="/privacy">Privacy Policy</a>
+        <span>•</span>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+.professional-footer {
+  background: #2c3e50;
+  color: #ecf0f1;
+  padding: 3rem 0;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.footer-brand {
+  text-align: center;
+}
+
+.footer-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.footer-title {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+.footer-desc {
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  opacity: 0.9;
+  color: azure;
+}
+
+.footer-cta {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #3498db;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.contact-btn:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 1rem 0;
+}
+
+.social-link {
+  color: #ecf0f1;
+  font-size: 1.2rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateY(-3px);
+}
+
+.footer-legal {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid gainsboro;
+}
+
+.copyright {
+  opacity: 0.8;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.legal-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.85rem;
+}
+
+.legal-links a {
+  color: #c4d9e7;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.legal-links a:hover {
+  color: #3498db;
+}
+
+.legal-links span {
+  opacity: 0.6;
+}
+
+@media (min-width: 768px) {
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    text-align: left;
+  }
+  
+  .footer-brand,
+  .footer-desc,
+  .footer-cta,
+  .footer-social,
+  .footer-legal {
+    text-align: left;
+  }
+  
+  .footer-legal {
+    grid-column: span 2;
+  }
+}
+</style>

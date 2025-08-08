@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Me</title>
+
+  <!-- CSS Links -->
+  <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+  <link rel="stylesheet" href="{% static 'css/header.style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/footer.style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  {% include 'portfolio/header.html' %}
+
+  <section class="contact-section">
+    <div class="contact-container">
+
+      <!-- Contact Info -->
+      <div class="contact-info">
+        <h2>Get in Touch</h2>
+        <p>I’m open to freelance work, collaborations, and job opportunities. Feel free to reach out for professional inquiries. Let’s build something amazing together!</p>
+
+        <div class="info-box">
+          <p><strong>Email:</strong> neha.nasir987@gmail.com</p>
+          <p><strong>Phone:</strong> +92-327-4089120</p>
+          <p><strong>Location:</strong> Lahore, Pakistan</p>
+        </div>
+
+        <div class="social-links">
+          <a href="https://github.com/nehanasir987" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+          <a href="https://www.linkedin.com/in/neha-nasir/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+          <a href="mailto:neha.nasir987@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="contact-form">
+        <h2>Send a Message</h2>
+        <form method="post" class="contact-form">
+          {% csrf_token %}
+
+          <div class="form-group">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+          </div>
+
+          <div class="form-group">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+          </div>
+
+          <div class="form-group">
+            {{ form.message.label_tag }}
+            {{ form.message }}
+          </div>
+
+          <button type="submit" class="btn-submit">Send Message</button>
+
+          {% if success %}
+            <p style="color: green; margin-top: 10px;">Thanks for reaching out! ✅</p>
+          {% endif %}
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  {% include 'portfolio/footer.html' %}
+</body>
+</html>
