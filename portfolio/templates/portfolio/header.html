@@ -1,23 +1,197 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="{% static 'css/header.style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Neha Portfolio</title>
+  <style>
+    /* ===== Base header styles ===== */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background-color: #222;
+      color: #fff;
+      position: relative;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: #f39c12;
+    }
+
+    .nav-bar ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-bar ul li {
+      margin-left: 25px;
+    }
+
+    .nav-bar ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-bar ul li a:hover {
+      color: #f39c12;
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100%;
+      background: rgba(0,0,0,0.6);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+      z-index: 900;
+    }
+
+    .overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ===== Mobile styles ===== */
+    @media (max-width: 768px) {
+      .nav-bar {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 250px;
+        background-color: #222;
+        display: flex;
+        flex-direction: column;
+        padding-top: 60px;
+        transition: right 0.3s ease;
+        z-index: 1000;
+      }
+
+      .nav-bar.show {
+        right: 0;
+      }
+
+      .nav-bar ul {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-bar ul li {
+        margin: 15px 20px;
+      }
+
+      .hamburger {
+        display: block;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="header">
-    <div class="logo">Neha<span>Portfolio</span></div>
-    <nav class="nav-bar">
+    <a href="{% url 'home' %}" class="logo">Neha<span>Portfolio</span></a>
+
+    <button class="hamburger" id="hamburger">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <nav class="nav-bar" id="navBar">
       <ul>
         <li><a href="{% url 'home' %}">Home</a></li>
         <li><a href="{% url 'project' %}">Projects</a></li>
         <li><a href="{% url 'contact' %}">Contact</a></li>
       </ul>
-    
-
     </nav>
+    
+    <div class="overlay" id="overlay"></div>
   </header>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const hamburger = document.getElementById("hamburger");
+      const navBar = document.getElementById("navBar");
+      const overlay = document.getElementById("overlay");
+      const navLinks = document.querySelectorAll('.nav-bar ul li a');
+
+      // Toggle menu open/close
+      const toggleMenu = () => {
+        navBar.classList.toggle("show");
+        overlay.classList.toggle("show");
+        const icon = hamburger.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+      };
+
+      // Close menu
+      const closeMenu = () => {
+        navBar.classList.remove("show");
+        overlay.classList.remove("show");
+        const icon = hamburger.querySelector('i');
+        icon.classList.replace('fa-times', 'fa-bars');
+      };
+
+      // Hamburger click
+      hamburger.addEventListener("click", toggleMenu);
+
+      // Overlay click
+      overlay.addEventListener("click", closeMenu);
+
+      // Nav links click (mobile)
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          if (window.innerWidth <= 768 && navBar.classList.contains('show')) {
+            closeMenu();
+            setTimeout(() => {
+              window.location.href = link.href;
+            }, 200);
+            e.preventDefault();
+          }
+        });
+      });
+
+      // Close menu automatically if resizing to desktop
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+          closeMenu();
+        }
+      });
+    });
+  </script>
+
+  {% block content %}
+  {% endblock %}
 </body>
 </html>

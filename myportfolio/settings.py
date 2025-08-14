@@ -91,7 +91,7 @@ import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgres://neha_admin:neha56s%23%29p%28.@localhost:5432/myportfolio', 
+        default='postgresql://portfolio1_db_user:xx3heFcNrn9Jb9sig7FEXE8Uo4QH61jT@dpg-d2b20ec9c44c7387cv20-a.oregon-postgres.render.com/portfolio1_db', 
         conn_max_age=600
     )
 }

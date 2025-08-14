@@ -11,4 +11,5 @@ from . import views
 urlpatterns = [
     path('', views.index, name='home'),            # 👈 Default root URL
     path('project/', views.project, name='project'),
-    path('contact/', views.contact_view, name='contact'),]
+    path('contact/', views.contact_view, name='contact'),
+]
