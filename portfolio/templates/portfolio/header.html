@@ -33,19 +33,33 @@
       font-size: 24px;
       display: flex;
       align-items: center;
+      gap: 10px;
     }
 
-    .logo span {
-      margin-left: 5px;
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-name {
+      color: gray;
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .logo-portfolio {
+      color: orange;
+      font-size: 1.2rem;
+      line-height: 1;
     }
 
     /* Logo image */
     .logo img {
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       object-fit: cover;
-      display: none; /* hidden on desktop by default */
+      display: block;
     }
 
     /* Nav bar */
@@ -113,32 +127,47 @@
     /* For mobile devices */
     @media (max-width: 768px) {
       .header {
-        padding: 15px 20px;
+        padding: 10px 15px;
         position: fixed;
         width: 100%;
         box-sizing: border-box;
       }
       
-      .logo span {
-        display: none;
+      .logo {
+        font-size: 20px;
+      }
+      
+      .logo-text {
+        display: flex !important; /* Force show on mobile */
+      }
+      
+      .logo-name {
+        font-size: 0.9rem;
+        color:white;
+      }
+      
+      .logo-portfolio {
+        font-size: 1rem;
+        color: orange;
       }
       
       .logo img {
-        display: block;
+        width: 35px;
+        height: 35px;
       }
       
       .nav-bar {
         position: fixed;
-        top: 80px; /* Adjusted to start below header */
+        top: 70px;
         right: -100%;
         width: 100%;
-        max-width: 300px;
-        max-height:50vh; /* Adjusted height */
+        max-width: 180px;
+        max-height: 50vh;
         background-color: #222;
-        padding: 20px;
+        padding: 15px;
         transition: right 0.3s ease;
         z-index: 1000;
-        overflow-y: auto; /* Add scroll if needed */
+        overflow-y: auto;
       }
       
       .nav-bar.active {
@@ -150,8 +179,7 @@
       }
       
       .nav-bar ul li {
-        margin: 15px 0;
-        margin-left: 0;
+        margin: 12px 0;
       }
       
       .hamburger {
@@ -162,18 +190,26 @@
     /* For very small mobile devices */
     @media (max-width: 480px) {
       .header {
-        padding: 10px 15px;
+        padding: 8px 12px;
         height: 60px;
       }
       
       .logo img {
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
+      }
+      
+      .logo-name {
+        font-size: 0.8rem;
+      }
+      
+      .logo-portfolio {
+        font-size: 0.9rem;
       }
       
       .nav-bar {
-        top: 60px; /* Adjusted for smaller header */
-        height: calc(100vh - 60px); /* Adjusted height */
+        top: 60px;
+        max-height: 45vh;
       }
     }
   </style>
@@ -182,8 +218,11 @@
   <header class="header">
     <!-- Logo -->
     <a href="{% url 'home' %}" class="logo">
-      <img src="{% static 'images/yam1.png' %}">
-      <span style="color: gray">Neha</span><span style="color:orange">Portfolio</span>
+      <img src="{% static 'images/yam1.png' %}" alt="Neha's Profile">
+      <div class="logo-text">
+        <span style="color:white" class="logo-name">Neha</span>
+        <span style="color: orange" class="logo-portfolio">Portfolio</span>
+      </div>
     </a>
 
     <button class="hamburger" id="hamburger">
@@ -195,7 +234,6 @@
         <li><a href="{% url 'home' %}">Home</a></li>
         <li><a href="{% url 'project' %}">Projects</a></li>
         <li><a href="{% url 'contact' %}">Contact</a></li>
-
       </ul>
     </nav>
     
