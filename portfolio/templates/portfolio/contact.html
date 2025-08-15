@@ -5,14 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Me</title>
-
-  <!-- CSS Links -->
   <link rel="stylesheet" href="{% static 'css/contact.css' %}">
   <link rel="stylesheet" href="{% static 'css/header.style.css' %}">
   <link rel="stylesheet" href="{% static 'css/footer.style.css' %}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-
 <body>
 
   {% include 'portfolio/header.html' %}
@@ -41,7 +38,7 @@
       <!-- Contact Form -->
       <div class="contact-form">
         <h2>Send a Message</h2>
-        <form method="post" class="contact-form">
+        <form method="post">
           {% csrf_token %}
 
           <div class="form-group">
@@ -62,7 +59,7 @@
           <button type="submit" class="btn-submit">Send Message</button>
 
           {% if success %}
-            <p style="color: green; margin-top: 10px;">Thanks for reaching out! ✅</p>
+            <p class="success-msg">Thanks for reaching out! ✅</p>
           {% endif %}
         </form>
       </div>
@@ -71,5 +68,6 @@
   </section>
 
   {% include 'portfolio/footer.html' %}
+
 </body>
 </html>

@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <title>Neha Portfolio</title>
   <style>
-    /* ===== Base header styles ===== */
+    /* ===== Base styles ===== */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -25,17 +25,30 @@
       z-index: 1000;
     }
 
+    /* Logo */
     .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #fff;
       text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
     }
 
     .logo span {
-      color: #f39c12;
+      margin-left: 5px;
     }
 
+    /* Logo image */
+    .logo img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: none; /* hidden on desktop by default */
+    }
+
+    /* Nav bar */
     .nav-bar ul {
       list-style: none;
       display: flex;
@@ -58,6 +71,7 @@
       color: #f39c12;
     }
 
+    /* Hamburger */
     .hamburger {
       display: none;
       background: none;
@@ -65,8 +79,10 @@
       color: #fff;
       font-size: 24px;
       cursor: pointer;
+      z-index: 1001;
     }
 
+    /* Overlay */
     .overlay {
       position: fixed;
       top: 0;
@@ -85,44 +101,90 @@
       visibility: visible;
     }
 
-    /* ===== Mobile styles ===== */
+    /* ===== Responsive Styles ===== */
+    
+    /* For tablets and small laptops */
+    @media (max-width: 992px) {
+      .nav-bar ul li {
+        margin-left: 15px;
+      }
+    }
+
+    /* For mobile devices */
     @media (max-width: 768px) {
+      .header {
+        padding: 15px 20px;
+        position: fixed;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .logo span {
+        display: none;
+      }
+      
+      .logo img {
+        display: block;
+      }
+      
       .nav-bar {
         position: fixed;
-        top: 0;
+        top: 80px; /* Adjusted to start below header */
         right: -100%;
-        height: 100vh;
-        width: 250px;
+        width: 100%;
+        max-width: 300px;
+        max-height:50vh; /* Adjusted height */
         background-color: #222;
-        display: flex;
-        flex-direction: column;
-        padding-top: 60px;
+        padding: 20px;
         transition: right 0.3s ease;
         z-index: 1000;
+        overflow-y: auto; /* Add scroll if needed */
       }
-
-      .nav-bar.show {
+      
+      .nav-bar.active {
         right: 0;
       }
-
+      
       .nav-bar ul {
         flex-direction: column;
-        align-items: flex-start;
       }
-
+      
       .nav-bar ul li {
-        margin: 15px 20px;
+        margin: 15px 0;
+        margin-left: 0;
       }
-
+      
       .hamburger {
         display: block;
+      }
+    }
+
+    /* For very small mobile devices */
+    @media (max-width: 480px) {
+      .header {
+        padding: 10px 15px;
+        height: 60px;
+      }
+      
+      .logo img {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .nav-bar {
+        top: 60px; /* Adjusted for smaller header */
+        height: calc(100vh - 60px); /* Adjusted height */
       }
     }
   </style>
 </head>
 <body>
   <header class="header">
-    <a href="{% url 'home' %}" class="logo">Neha<span>Portfolio</span></a>
+    <!-- Logo -->
+    <a href="{% url 'home' %}" class="logo">
+      <img src="{% static 'images/yam1.png' %}">
+      <span style="color: gray">Neha</span><span style="color:orange">Portfolio</span>
+    </a>
 
     <button class="hamburger" id="hamburger">
       <i class="fas fa-bars"></i>
@@ -133,65 +195,47 @@
         <li><a href="{% url 'home' %}">Home</a></li>
         <li><a href="{% url 'project' %}">Projects</a></li>
         <li><a href="{% url 'contact' %}">Contact</a></li>
+
       </ul>
     </nav>
     
     <div class="overlay" id="overlay"></div>
   </header>
 
+  {% block content %}
+  {% endblock %}
+
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const hamburger = document.getElementById("hamburger");
-      const navBar = document.getElementById("navBar");
-      const overlay = document.getElementById("overlay");
-      const navLinks = document.querySelectorAll('.nav-bar ul li a');
-
-      // Toggle menu open/close
-      const toggleMenu = () => {
-        navBar.classList.toggle("show");
-        overlay.classList.toggle("show");
-        const icon = hamburger.querySelector('i');
-        icon.classList.toggle('fa-bars');
-        icon.classList.toggle('fa-times');
-      };
-
-      // Close menu
-      const closeMenu = () => {
-        navBar.classList.remove("show");
-        overlay.classList.remove("show");
-        const icon = hamburger.querySelector('i');
-        icon.classList.replace('fa-times', 'fa-bars');
-      };
-
-      // Hamburger click
-      hamburger.addEventListener("click", toggleMenu);
-
-      // Overlay click
-      overlay.addEventListener("click", closeMenu);
-
-      // Nav links click (mobile)
-      navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-          if (window.innerWidth <= 768 && navBar.classList.contains('show')) {
-            closeMenu();
-            setTimeout(() => {
-              window.location.href = link.href;
-            }, 200);
-            e.preventDefault();
-          }
-        });
-      });
-
-      // Close menu automatically if resizing to desktop
-      window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-          closeMenu();
+    // Mobile menu toggle functionality
+    const hamburger = document.getElementById('hamburger');
+    const navBar = document.getElementById('navBar');
+    const overlay = document.getElementById('overlay');
+    
+    hamburger.addEventListener('click', () => {
+      navBar.classList.toggle('active');
+      overlay.classList.toggle('show');
+      hamburger.innerHTML = navBar.classList.contains('active') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+    });
+    
+    overlay.addEventListener('click', () => {
+      navBar.classList.remove('active');
+      overlay.classList.remove('show');
+      hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+    });
+    
+    // Close menu when clicking on a link
+    const navLinks = document.querySelectorAll('.nav-bar ul li a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          navBar.classList.remove('active');
+          overlay.classList.remove('show');
+          hamburger.innerHTML = '<i class="fas fa-bars"></i>';
         }
       });
     });
   </script>
-
-  {% block content %}
-  {% endblock %}
 </body>
 </html>
